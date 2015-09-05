@@ -14,3 +14,5 @@ function exec(current,previous){
   }
 }
 fs.watchFile('2.txt',{interval:0},exec);
+
+console.log(Date.parse('Sat Sep 05 2015 17:47:27 GMT+0800'));

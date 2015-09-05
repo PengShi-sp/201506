@@ -42,10 +42,11 @@ console.log(buf5.toString());
 var buff1 = new Buffer('珠峰');
 var buff2 = new Buffer('培训');
 console.log(Buffer.concat([buff1,buff2],12));
-var buff3 = new Buffer(6);
+var buff3 = new Buffer(3);
 //targetBuffer, targetStart, sourceStart, sourceEnd
 buff2.copy(buff3,0,0,6);
 console.log(buff3.toString());
+
 
 console.log(buff3 instanceof Object);
 console.log(Buffer.isBuffer(buff3));
@@ -53,5 +54,6 @@ console.log(Buffer.isBuffer(buff3));
 console.log(Buffer.byteLength("培训"));
 
 console.log(Buffer.isEncoding('utf8'));
+
 
 
