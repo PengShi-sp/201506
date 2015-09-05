@@ -33,7 +33,7 @@ http.createServer(function(req,res){
         res.end(JSON.stringify(queryObj));
     }else{
         var filename = '.'+pathname;
-
+        res.setHeader('Content-Type',mime.lookup(filename));
         fs.exists(filename,function(exists){
             if(exists){
                 fs.readFile(filename,function(err,data){
