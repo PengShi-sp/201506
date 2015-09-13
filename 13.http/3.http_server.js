@@ -17,6 +17,7 @@ server.on('connection',function(){
 
 server.on('request',function(req,res){
     console.log(req.url);
+    console.log(req.headers.name);
     var urlObj = url.parse(req.url,true);
     var pathname = urlObj.pathname;
     if(pathname == '/'){

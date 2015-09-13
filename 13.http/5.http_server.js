@@ -10,7 +10,6 @@ var url = require('url');
 var querystring = require('querystring');
 var util = require('util');
 var fs= require('fs');
-var formidable = require('formidable');
 var server = http.createServer();
 server.on('connection',function(){
     console.log('连接建立');
@@ -23,19 +22,37 @@ server.on('request',function(req,res){
     if(pathname == '/'){
         fs.createReadStream('./post.html').pipe(res);
     }else if(pathname == '/post'){
-       // req.pipe(fs.createWriteStream('./form.txt'));
-      var form = new formidable.IncomingForm();
-        form.parse(req,function(err,fields,files){
-            console.log(fields);
-            console.log(files);
-            fs.createReadStream(files.avatar.path).
-                pipe(fs.createWriteStream('./upload/'+files.avatar.name));
+        var result = [];
+        req.on('data',function(chunk){
+            result.push(chunk);
+        })
+        req.on('end',function(){
+            var body = Buffer.concat(result).toString();
+            var bodyObj = querystring.parse(body);
+            var fields = {};
+            var files = {};
+            for(var name in bodyObj){
+                console.log(name);
+
+                console.log(bodyObj[name]);
+                if(name.indexOf('file:')==0){
+                    var dists = name.split(':');
+                    fs.writeFileSync('./upload/'+dists[2],bodyObj[name],'base64');
+                    files[dists[1]] = '/upload/'+dists[2];
+                }else{
+                    fields[name] = bodyObj[name];
+                }
+                console.error(fields);
+                console.error(files);
+            }
             res.setHeader('Content-Type','text/html');
             res.write('<h1>'+fields.username+'</h1>');
             res.write('<h1>'+fields.password+'</h1>');
-            res.write('<img src="/upload/'+files.avatar.name+'">');
+            res.write('<img src="'+files['avatar']+'">');
             res.end();
         })
+
+
     }else{
         fs.exists('.'+pathname,function(exits){
             if(exits){
