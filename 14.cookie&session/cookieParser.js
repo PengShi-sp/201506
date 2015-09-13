@@ -1,10 +1,10 @@
 /**
- *  domain:'localhost',
-    path:'/read',
-    httpOnly:true,
-    maxAge:3600,
-    expires:new Date(new Date().getTime()+3600*1000),
-    Secure:true
+ *  domain:'localhost', Domain
+    path:'/read',Path
+    httpOnly:true,HttpOnly
+    maxAge:3600, Max-Age
+    expires: Expires
+    Secure:true Secure
  */
 exports.serialize = function(name,val,opt){
     opt = opt ||{};
@@ -12,10 +12,10 @@ exports.serialize = function(name,val,opt){
     if(opt.maxAge){
         pairs.push('Max-Age='+opt.maxAge);
     }
-    if(opt.domain);
-    if(opt.path);
-    if(opt.expires);
-    if(opt.httpOnly);
-    if(opt.secure);
+    if(opt.domain) pairs.push('Domain='+opt.domain);
+    if(opt.path) pairs.push('Path='+opt.path);
+    if(opt.expires) pairs.push('Expires='+opt.expires.toGMTString());
+    if(opt.httpOnly) pairs.push('HttpOnly');
+    if(opt.secure) pairs.push('Secure');
     return pairs.join('; ');
 }

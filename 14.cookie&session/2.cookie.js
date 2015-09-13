@@ -21,20 +21,27 @@ http.createServer(function(req,res){
         res.end('404');
     }else if(pathname == '/write'){//写入cookie
       res.statusCode = 200;
-      res.setHeader('Set-Cookie',[cookieParser.serialize(age,6,{
-          domain:'localhost',
-          path:'/read',
-          httpOnly:true,
-          maxAge:3600,
-          expires:new Date(new Date().getTime()+3600*1000),
-          Secure:true
+      res.setHeader('Set-Cookie',[cookieParser.serialize('name','zfpx',{
+
+      }),cookieParser.serialize('vip','1',{
+
       })]);
         res.end('ok');
     }else{
+        res.setHeader('Content-Type','text/html;charset=utf-8')
         //Cookie:   name=zfpx2; age=6
         //query     name=zfpx&age=6
         var cookie = req.headers.cookie;
         var cookieObj = querystring.parse(cookie,'; ');
-        res.end(JSON.stringify(cookieObj));
+        if(cookieObj.name){
+            if(cookieObj.vip){
+                //  999.99999
+                res.end('欢迎你，尊贵的VIP');
+            }else{
+                res.end('你又来了');
+            }
+        }else{
+res.end('新朋友');
+        }
     }
 }).listen(8080);
