@@ -21,3 +21,5 @@ process.nextTick(say1);
 console.log('welcome1');
 console.log('welcome2');
 // hello  welcome
+var path = require('path');
+path.extname()

@@ -6,6 +6,14 @@
  * 网络上传输的时候，先将对象转成字节流，再经过流的传输，到达目的地之后再将字节流转成对象。
  * 很多种类型，也有很多的方法，也有很多的事件
  * 流式读式
+ * \
+ * fs.ReadStream
+ * process.stdin 标准输入流
+ *
+ * gzip 压缩
+ * net.Socket TCP
+ * http.IncomingMessage  request
+ *
  *
  */
 

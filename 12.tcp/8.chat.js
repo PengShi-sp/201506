@@ -10,6 +10,7 @@ var util = require('util');
 var count =0;
 var clients = {};//存放所有的用户
 var server = net.createServer(function(socket){
+    console.log('coming');
     var nickname;//设置用户的呢称
     socket.write('欢迎光临,请输入用户名\r\n');
     socket.setEncoding('utf8');
@@ -33,6 +34,9 @@ var server = net.createServer(function(socket){
         broadcast(nickname,"系统:"+nickname+'离开了聊天室,现在已经有'+(--count)+'人');
     });
 
+    socket.on('error',function(){
+        console.log(arguments);
+    });
     function broadcast(nickname,msg){
         msg += "\r\n>";
         for(var name in clients){
@@ -42,5 +46,7 @@ var server = net.createServer(function(socket){
         }
     }
 })
-
-server.listen(8080);
+server.on('error',function(){
+    console.log(arguments);
+});
+server.listen(8080,'0.0.0.0');

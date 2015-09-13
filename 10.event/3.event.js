@@ -25,7 +25,11 @@ Event.prototype.emit = function(eventName){
         handlers[i].apply(this,args);
     }
 }
-
+Event.prototype.removeListener = function(eventName,listener){
+    if(this._events[eventName]){
+        this._events[eventName].pop(listener);
+    }
+}
 var teacher = new Event('teacher');
 var me = function(name){
     console.log('I beat '+name);
